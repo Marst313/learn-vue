@@ -72,12 +72,12 @@ onMounted(async () => {
 <template>
     <div>
         <div class="card">
-            <div v-if="customerStore.isLoading || customerStore.globalLoading" class="flex justify-center items-center min-h-[200px]">
+            <div v-if="customerStore.isLoading && customerStore.globalLoading" class="flex justify-center items-center min-h-[200px]">
                 <TableSkeleton />
             </div>
 
             <DataTable
-                v-if="!customerStore.isLoading"
+                v-if="!customerStore.isLoading && !customerStore.globalLoading"
                 ref="dtDetails"
                 v-model:selection="customerStore.selectedCustomers"
                 :value="customerStore.customerDetails"
