@@ -5,11 +5,11 @@ import YearlyCharts from '@/components/dashboard/YearlyCharts.vue';
 </script>
 
 <template>
-    <div class="grid grid-cols-12 gap-8">
-        <div class="grid grid-cols-1 lg:grid-cols-2 col-span-full gap-8">
+    <div class="flex flex-col">
+        <div class="gap-5 flex flex-col">
             <RecentSalesWidget />
 
-            <div class="grid grid-cols-1 lg:grid-cols-2 lg:col-span-full gap-4">
+            <div class="flex flex-col w-full xl:flex-row gap-3 h-fit">
                 <YearlyCharts />
                 <MonthlyChart />
             </div>

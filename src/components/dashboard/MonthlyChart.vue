@@ -45,7 +45,7 @@ onMounted(fetchMonthlyData);
 </script>
 
 <template>
-    <div class="card flex flex-col justify-center items-center h-fit">
+    <div class="card flex flex-col justify-center items-center min-w-96 w-full h-fit">
         <h4 class="font-normal mb-4">Rekap Mingguan Bulan {{ new Date().toLocaleString('id-ID', { month: 'long' }) }}</h4>
 
         <Chart v-if="chartData" type="bar" :data="chartData" :options="chartOptions" class="w-full" />

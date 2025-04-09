@@ -65,7 +65,7 @@ onMounted(async () => {
 </script>
 
 <template>
-    <div class="card flex justify-center flex-col items-center h-fit">
+    <div class="card flex justify-center flex-col items-center min-w-96 h-fit xl:w-full">
         <h4 class="font-normal mb-4">Data Pelanggan Tahun {{ new Date().getFullYear() }}</h4>
 
         <Chart v-if="chartData?.labels?.length" type="bar" :data="chartData" :options="chartOptions" class="w-full" />

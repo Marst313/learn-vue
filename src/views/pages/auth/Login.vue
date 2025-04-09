@@ -72,7 +72,7 @@ onMounted(async () => {
                         <div class="flex items-center justify-between mt-2 mb-8 gap-8">
                             <!-- <span class="font-medium no-underline ml-2 text-right cursor-pointer text-primary">Forgot password?</span> -->
                         </div>
-                        <Button label="Sign In" type="submit" class="w-full" :disabled="loading"></Button>
+                        <Button :label="loading ? 'Loading...' : 'Sign In'" type="submit" class="w-full" :disabled="loading"></Button>
                     </div>
                 </form>
             </div>
