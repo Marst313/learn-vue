@@ -8,10 +8,13 @@ import ConfirmationService from 'primevue/confirmationservice';
 import ToastService from 'primevue/toastservice';
 
 import '@/assets/styles.scss';
+import { createPinia } from 'pinia';
 
 const app = createApp(App);
+const pinia = createPinia();
 
 app.use(router);
+app.use(pinia);
 app.use(PrimeVue, {
     theme: {
         preset: Aura,

@@ -1,3 +1,9 @@
+<script>
+export default {
+    name: 'FeaturesSection'
+};
+</script>
+
 <template>
     <div id="features" class="py-6 px-6 lg:px-20 mt-8 mx-0 lg:mx-20">
         <div class="grid grid-cols-12 gap-4 justify-center">
@@ -44,12 +50,6 @@
         </div>
     </div>
 </template>
-
-<script>
-export default {
-    name: 'FeaturesSection'
-};
-</script>
 
 <style scoped>
 /* Tambahkan gaya khusus untuk section ini jika diperlukan */

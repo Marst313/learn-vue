@@ -1,6 +1,10 @@
 <script setup>
 import { useLayout } from '@/layout/composables/layout';
-import { computed, ref, watch } from 'vue';
+import { AuthService } from '@/service/AuthService';
+import { useCustomerStore } from '@/store/pelanggan';
+import { computed, onMounted, ref, watch } from 'vue';
+import { useRouter } from 'vue-router';
+
 import AppFooter from './AppFooter.vue';
 import AppSidebar from './AppSidebar.vue';
 import AppTopbar from './AppTopbar.vue';
@@ -8,6 +12,8 @@ import AppTopbar from './AppTopbar.vue';
 const { layoutConfig, layoutState, isSidebarActive } = useLayout();
 
 const outsideClickListener = ref(null);
+const router = useRouter();
+const customerStore = useCustomerStore();
 
 watch(isSidebarActive, (newVal) => {
     if (newVal) {
@@ -53,6 +59,21 @@ function isOutsideClicked(event) {
 
     return !(sidebarEl.isSameNode(event.target) || sidebarEl.contains(event.target) || topbarEl.isSameNode(event.target) || topbarEl.contains(event.target));
 }
+
+onMounted(async () => {
+    try {
+        customerStore.setLoading(true);
+        const user = await AuthService.getMe();
+        if (!user) {
+            router.push('/auth/login');
+        }
+        customerStore.setLoading(false);
+    } catch (error) {
+        console.error('Failed to fetch user data:', error);
+        router.push('/auth/login');
+        customerStore.setLoading(false);
+    }
+});
 </script>
 
 <template>

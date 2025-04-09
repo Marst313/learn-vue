@@ -10,7 +10,7 @@ const items = ref([
 </script>
 
 <template>
-    <div class="card">
+    <div class="card col-span-6 xl:col-span-full">
         <div class="flex justify-between items-center mb-6">
             <div class="font-semibold text-xl">Best Selling Products</div>
             <div>
