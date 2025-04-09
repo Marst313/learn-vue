@@ -8,7 +8,8 @@ export const PelangganService = {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                     'Content-Type': 'application/json'
-                }
+                },
+                credentials: 'include'
             });
 
             if (!response.ok) {
@@ -33,6 +34,7 @@ export const PelangganService = {
                     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                     'Content-Type': 'application/json'
                 },
+                credentials: 'include',
                 body: JSON.stringify(pelanggan)
             });
 
@@ -56,6 +58,7 @@ export const PelangganService = {
                     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                     'Content-Type': 'application/json'
                 },
+                credentials: 'include',
                 body: JSON.stringify(pelanggan)
             });
 
@@ -78,7 +81,8 @@ export const PelangganService = {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                     'Content-Type': 'application/json'
-                }
+                },
+                credentials: 'include'
             });
 
             const json = await response.json();
@@ -97,7 +101,8 @@ export const PelangganService = {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                     'Content-Type': 'application/json'
-                }
+                },
+                credentials: 'include'
             });
 
             if (!response.ok) {
@@ -121,7 +126,7 @@ export const PelangganService = {
                     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                     'Content-Type': 'application/json'
                 },
-
+                credentials: 'include',
                 body: JSON.stringify({ startDate, endDate })
             });
 

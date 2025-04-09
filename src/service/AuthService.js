@@ -5,6 +5,7 @@ export const AuthService = {
             headers: {
                 'Content-Type': 'application/json'
             },
+            credentials: 'include',
             body: JSON.stringify({ email, password })
         });
 
@@ -21,7 +22,8 @@ export const AuthService = {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
-            }
+            },
+            credentials: 'include'
         });
         localStorage.removeItem('accessToken');
 
@@ -43,7 +45,8 @@ export const AuthService = {
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${token}`
-            }
+            },
+            credentials: 'include'
         });
 
         const data = await response.json();
