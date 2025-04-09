@@ -8,14 +8,17 @@ const email = ref('');
 const password = ref('');
 const router = useRouter();
 const toast = useToast();
+const loading = ref(false);
 
 const handleLogin = async () => {
     try {
+        loading.value = true;
         const response = await AuthService.login(email.value, password.value);
 
         localStorage.setItem('accessToken', response.data.accessToken);
 
         router.push('/');
+        loading.value = false;
     } catch (error) {
         toast.add({
             severity: 'error',
@@ -23,6 +26,7 @@ const handleLogin = async () => {
             detail: error.message,
             life: 3000
         });
+        loading.value = false;
     }
 };
 
@@ -32,6 +36,7 @@ onMounted(async () => {
         if (user) {
             router.push('/');
         }
+        loading.value = true;
     } catch (error) {
         toast.add({
             severity: 'warn',
@@ -39,6 +44,7 @@ onMounted(async () => {
             detail: error.message,
             life: 3000
         });
+        loading.value = false;
     }
 });
 </script>
@@ -64,7 +70,7 @@ onMounted(async () => {
                         <div class="flex items-center justify-between mt-2 mb-8 gap-8">
                             <!-- <span class="font-medium no-underline ml-2 text-right cursor-pointer text-primary">Forgot password?</span> -->
                         </div>
-                        <Button label="Sign In" type="submit" class="w-full"></Button>
+                        <Button label="Sign In" type="submit" class="w-full" :disabled="loading"></Button>
                     </div>
                 </form>
             </div>
