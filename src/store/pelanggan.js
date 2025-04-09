@@ -70,7 +70,7 @@ export const useCustomerStore = defineStore('pelanggan', {
             const isValid =
                 customer.namaPemilik?.trim() &&
                 customer.namaHewan?.trim() &&
-                jenisHewan.trim() &&
+                jenisHewan?.trim() &&
                 customer.jenisKelamin &&
                 customer.umur !== null &&
                 customer.umur >= 0 &&
@@ -83,7 +83,6 @@ export const useCustomerStore = defineStore('pelanggan', {
             if (!isValid) {
                 toast.add({ severity: 'warn', summary: 'Validasi Gagal', detail: 'Mohon isi semua data yang diperlukan!', life: 3000 });
                 this.isLoading = false;
-
                 return false;
             }
 
@@ -105,20 +104,20 @@ export const useCustomerStore = defineStore('pelanggan', {
                 if (type === 'detail') {
                     await this.getDetailPelanggan(customer.namaPemilik, customer.namaHewan);
                 }
+
                 await this.getPelangganData();
 
                 this.customerDialog = false;
                 this.singleCustomer = {};
                 this.dropdownItem = '';
-                this.isLoading = false;
 
                 return true;
             } catch (err) {
                 console.error(err);
                 toast.add({ severity: 'error', summary: 'Gagal', detail: 'Gagal menyimpan data pelanggan', life: 3000 });
-                this.isLoading = false;
-
                 return false;
+            } finally {
+                this.isLoading = false;
             }
         },
 
