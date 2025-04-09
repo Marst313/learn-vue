@@ -32,11 +32,13 @@ const handleLogin = async () => {
 
 onMounted(async () => {
     try {
+        loading.value = true;
+
         const user = await AuthService.getMe();
         if (user) {
             router.push('/');
         }
-        loading.value = true;
+        loading.value = false;
     } catch (error) {
         toast.add({
             severity: 'warn',
