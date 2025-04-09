@@ -3,11 +3,9 @@ import PelangganTableHeader from '@/components/pelanggan/PelangganTableHeader.vu
 import { formatDate } from '@/helper/constant';
 import { useCustomerStore } from '@/store/pelanggan';
 import { FilterMatchMode } from '@primevue/core/api';
-import { useToast } from 'primevue/usetoast';
 import { ref } from 'vue';
 import TableSkeleton from '../TableSkeleton.vue';
 
-const toast = useToast();
 const customerStore = useCustomerStore();
 
 const dt = ref();

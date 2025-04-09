@@ -1,12 +1,12 @@
 <script setup>
 import { FilterMatchMode } from '@primevue/core/api';
-import ProgressSpinner from 'primevue/progressspinner';
 import { useToast } from 'primevue/usetoast';
 import { onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 import PelangganTableHeader from '@/components/pelanggan/PelangganTableHeader.vue';
 import PelangganToolbar from '@/components/pelanggan/PelangganToolbar.vue';
+import TableSkeleton from '@/components/TableSkeleton.vue';
 import { formatDate, formatToLocalDateInput } from '@/helper/constant';
 import { useCustomerStore } from '@/store/pelanggan';
 
@@ -73,7 +73,7 @@ onMounted(async () => {
     <div>
         <div class="card">
             <div v-if="customerStore.isLoading || customerStore.globalLoading" class="flex justify-center items-center min-h-[200px]">
-                <ProgressSpinner />
+                <TableSkeleton />
             </div>
 
             <DataTable

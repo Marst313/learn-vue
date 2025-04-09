@@ -22,7 +22,7 @@ export const useCustomerStore = defineStore('pelanggan', {
         recapCustomer: [],
         recapCustomerYearly: [],
         recapCustomerMonthly: [],
-        findDate: null,
+        findDate: [],
         hasFindDate: false,
 
         // Dropdown
@@ -63,7 +63,7 @@ export const useCustomerStore = defineStore('pelanggan', {
             this.isLoading = true;
             let jenisHewan = customer.jenisHewan.name;
 
-            if (type === 'detail') {
+            if (type === 'detail' || customer.id) {
                 jenisHewan = customer.jenisHewan;
             }
 
@@ -168,6 +168,9 @@ export const useCustomerStore = defineStore('pelanggan', {
 
             const data = await PelangganService.getRecapPelanggan(startDate, endDate);
 
+            this.findDate[0] = startDate;
+            this.findDate[1] = endDate;
+
             this.recapCustomer = data.data;
             this.globalLoading = false;
             this.hasSearched = true;
@@ -202,7 +205,7 @@ export const useCustomerStore = defineStore('pelanggan', {
         searchJenis(event) {
             setTimeout(() => {
                 if (!event.query.trim().length) {
-                    this.filteredJenisHewan = [...countries.value];
+                    this.filteredJenisHewan = [...this.jenisHewanOptions];
                 } else {
                     this.filteredJenisHewan = this.jenisHewanOptions.filter((country) => {
                         return country.name.toLowerCase().startsWith(event.query.toLowerCase());

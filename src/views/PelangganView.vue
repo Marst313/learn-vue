@@ -70,7 +70,7 @@ onMounted(async () => {
                 <TableSkeleton />
             </div>
             <DataTable
-                v-if="!customerStore.isLoading"
+                v-if="!customerStore.isLoading || customerStore.globalLoading"
                 ref="dt"
                 v-model:selection="customerStore.selectedCustomers"
                 :value="customerStore.customers"

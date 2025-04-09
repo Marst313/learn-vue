@@ -6,7 +6,6 @@ import { useRouter } from 'vue-router';
 
 const email = ref('');
 const password = ref('');
-const checked = ref(false);
 const router = useRouter();
 const toast = useToast();
 

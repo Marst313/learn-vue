@@ -23,7 +23,7 @@ async function logout() {
     try {
         await AuthService.logout();
         router.push('/auth/login');
-    } catch (error: any) {
+    } catch (error) {
         toast.add({
             severity: 'error',
             summary: 'Logout Gagal',

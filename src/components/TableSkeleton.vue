@@ -1,3 +1,10 @@
+<script setup>
+import Skeleton from 'primevue/skeleton';
+import { ref } from 'vue';
+
+const skeletonData = ref(new Array(10).fill({}));
+</script>
+
 <template>
     <div class="col-span-6 xl:col-span-full space-y-2">
         <div class="card">
@@ -65,10 +72,3 @@
         </div>
     </div>
 </template>
-
-<script setup>
-import Skeleton from 'primevue/skeleton';
-import { ref } from 'vue';
-
-const skeletonData = ref(new Array(10).fill({}));
-</script>
