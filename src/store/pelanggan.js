@@ -61,16 +61,11 @@ export const useCustomerStore = defineStore('pelanggan', {
         async saveCustomer(customer, dokterSelected, toast, type) {
             this.submitted = true;
             this.isLoading = true;
-            let jenisHewan = customer.jenisHewan.name;
-
-            if (type === 'detail' || customer.id) {
-                jenisHewan = customer.jenisHewan;
-            }
 
             const isValid =
                 customer.namaPemilik?.trim() &&
                 customer.namaHewan?.trim() &&
-                jenisHewan?.trim() &&
+                customer.jenisHewan?.trim() &&
                 customer.jenisKelamin &&
                 customer.umur !== null &&
                 customer.umur >= 0 &&

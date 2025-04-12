@@ -157,7 +157,9 @@ onMounted(async () => {
                 <div class="grid grid-cols-2 space-x-5">
                     <div>
                         <label for="jenisHewan" class="block font-bold mb-3">Jenis Hewan</label>
-                        <AutoComplete v-model="customerStore.singleCustomer.jenisHewan" optionLabel="name" :suggestions="customerStore.filteredJenisHewan" @complete="customerStore.searchJenis" placeholder="Masukkan jenis hewan" class="w-full">
+                        <InputText id="jenisHewan" type="text" v-model="customerStore.singleCustomer.jenisHewan" required="true" fluid placeholder="Jenis hewan" />
+
+                        <!-- <AutoComplete v-model="customerStore.singleCustomer.jenisHewan" optionLabel="name" :suggestions="customerStore.filteredJenisHewan" @complete="customerStore.searchJenis" placeholder="Masukkan jenis hewan" class="w-full">
                             <template #option="slotProps">
                                 <div class="flex items-center text-white">
                                     <div>{{ slotProps.option.name }}</div>
@@ -168,7 +170,7 @@ onMounted(async () => {
                                     <Button label="Add New" fluid severity="secondary" text size="small" icon="pi pi-plus" />
                                 </div>
                             </template>
-                        </AutoComplete>
+                        </AutoComplete> -->
 
                         <small v-if="customerStore.submitted && !customerStore.singleCustomer.jenisHewan" class="text-red-500">Jenis hewan tidak boleh kosong!</small>
                     </div>
