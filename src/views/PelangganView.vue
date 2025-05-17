@@ -8,6 +8,7 @@ import { useCustomerStore } from '@/store/pelanggan';
 import { FilterMatchMode } from '@primevue/core/api';
 import { useToast } from 'primevue/usetoast';
 import { onMounted, ref } from 'vue';
+import * as XLSX from 'xlsx';
 
 const toast = useToast();
 const customerStore = useCustomerStore();
@@ -53,9 +54,25 @@ function editCustomer(prod) {
 }
 // ! -- Save, Update and Delete -- !!
 
-// ! -- Export CSV -- !!
-function exportCSV() {
-    dt.value.exportCSV();
+// ! -- Export XLSX -- !!
+function exportXLSX() {
+    const data = customerStore.customers.map((cust) => ({
+        'Nama Pemilik': cust.namaPemilik,
+        'Nama Hewan': cust.namaHewan,
+        'Jenis Hewan': cust.jenisHewan,
+        'Jenis Kelamin': cust.jenisKelamin,
+        Umur: `${cust.umur} ${cust.tipeUmur}`,
+        'Tanggal Periksa': formatDate(cust.tanggalPeriksa),
+        Dokter: cust.dokter,
+        Anamnesa: cust.anamnesa,
+        Terapi: cust.terapi
+    }));
+
+    const worksheet = XLSX.utils.json_to_sheet(data);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Pelanggan');
+
+    XLSX.writeFile(workbook, 'data-pelanggan.xlsx');
 }
 
 onMounted(async () => {
@@ -83,7 +100,7 @@ onMounted(async () => {
                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} pelanggan"
             >
                 <template #header>
-                    <PelangganToolbar :selectedCustomer="customerStore.selectedCustomers" @create="openNewDialog" @delete-selected="openDeleteDialog" @export="exportCSV" />
+                    <PelangganToolbar :selectedCustomer="customerStore.selectedCustomers" @create="openNewDialog" @delete-selected="openDeleteDialog" @export="exportXLSX" />
 
                     <PelangganTableHeader :filters="filters" />
                 </template>

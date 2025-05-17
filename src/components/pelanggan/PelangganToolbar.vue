@@ -1,8 +1,5 @@
 <script setup>
 const emit = defineEmits(['create', 'delete-selected', 'export']);
-const props = defineProps({
-    selectedCustomer: Array
-});
 
 function openNew() {
     emit('create');

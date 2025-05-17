@@ -1,6 +1,6 @@
 export const AuthService = {
     login: async (email, password) => {
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/sign-in`, {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/sign-in`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -18,7 +18,7 @@ export const AuthService = {
         return data;
     },
     logout: async () => {
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/sign-out`, {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/sign-out`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -40,7 +40,7 @@ export const AuthService = {
             return;
         }
 
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/me`, {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/me`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

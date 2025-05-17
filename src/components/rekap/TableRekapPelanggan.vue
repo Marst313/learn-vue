@@ -1,8 +1,10 @@
 <script setup>
+import { FilterMatchMode } from '@primevue/core/api';
+import * as XLSX from 'xlsx';
+
 import PelangganTableHeader from '@/components/pelanggan/PelangganTableHeader.vue';
 import { formatDate } from '@/helper/constant';
 import { useCustomerStore } from '@/store/pelanggan';
-import { FilterMatchMode } from '@primevue/core/api';
 import { ref } from 'vue';
 import TableSkeleton from '../TableSkeleton.vue';
 
@@ -18,11 +20,27 @@ function getRecapData() {
     customerStore.getRecapCustomer(datePicker.value[0], datePicker.value[1]);
 }
 
-// ! -- Export CSV -- !!
-function exportCSV() {
-    dt.value.exportCSV();
+// ! -- Export XLSX -- !!
+function exportXLSX() {
+    const data = customerStore.customers.map((cust) => ({
+        'Nama Pemilik': cust.namaPemilik,
+        'Nama Hewan': cust.namaHewan,
+        'Jenis Hewan': cust.jenisHewan,
+        'Jenis Kelamin': cust.jenisKelamin,
+        Umur: `${cust.umur} ${cust.tipeUmur}`,
+        'Tanggal Periksa': formatDate(cust.tanggalPeriksa),
+        Dokter: cust.dokter,
+        Anamnesa: cust.anamnesa,
+        Terapi: cust.terapi
+    }));
+
+    const worksheet = XLSX.utils.json_to_sheet(data);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Pelanggan');
+
+    XLSX.writeFile(workbook, 'data-pelanggan.xlsx');
 }
-// ! -- Export CSV -- !!
+// ! -- Export XLSX -- !!
 </script>
 
 <template>
@@ -57,7 +75,7 @@ function exportCSV() {
                             <Button label="Tampilkan" icon="pi pi-search" severity="success" variant="outlined" @click="getRecapData" />
                         </div>
 
-                        <Button label="Export" icon="pi pi-upload" severity="contrast" @click="exportCSV($event)" />
+                        <Button label="Export" icon="pi pi-upload" severity="contrast" @click="exportXLSX($event)" />
                     </div>
                 </template>
 

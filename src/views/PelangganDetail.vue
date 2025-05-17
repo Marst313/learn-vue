@@ -3,6 +3,7 @@ import { FilterMatchMode } from '@primevue/core/api';
 import { useToast } from 'primevue/usetoast';
 import { onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import * as XLSX from 'xlsx';
 
 import PelangganTableHeader from '@/components/pelanggan/PelangganTableHeader.vue';
 import PelangganToolbar from '@/components/pelanggan/PelangganToolbar.vue';
@@ -61,9 +62,25 @@ function editCustomer(prod) {
 }
 // ! -- Save, Update and Delete -- !!
 
-// ! -- Export CSV -- !!
-function exportCSV() {
-    dtDetails.value.exportCSV();
+// ! -- Export XLSX -- !!
+function exportXLSX() {
+    const data = customerStore.customers.map((cust) => ({
+        'Nama Pemilik': cust.namaPemilik,
+        'Nama Hewan': cust.namaHewan,
+        'Jenis Hewan': cust.jenisHewan,
+        'Jenis Kelamin': cust.jenisKelamin,
+        Umur: `${cust.umur} ${cust.tipeUmur}`,
+        'Tanggal Periksa': formatDate(cust.tanggalPeriksa),
+        Dokter: cust.dokter,
+        Anamnesa: cust.anamnesa,
+        Terapi: cust.terapi
+    }));
+
+    const worksheet = XLSX.utils.json_to_sheet(data);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Pelanggan');
+
+    XLSX.writeFile(workbook, 'data-pelanggan.xlsx');
 }
 
 onMounted(async () => {
@@ -94,7 +111,7 @@ onMounted(async () => {
                 <template #header>
                     <Button icon="pi pi-arrow-left" outlined class="mr-2 mb-5" @click="router.back()" label="Kembali" />
 
-                    <PelangganToolbar :selectedProducts="customerStore.selectedCustomers" @create="openNewDialog" @delete-selected="openDeleteDialog" @export="exportCSV" />
+                    <PelangganToolbar :selectedProducts="customerStore.selectedCustomers" @create="openNewDialog" @delete-selected="openDeleteDialog" @export="exportXLSX" />
 
                     <PelangganTableHeader :filters="filters" :title="`Detail Pelanggan : ${namaPemilik} - ${namaHewan}`" />
                 </template>
