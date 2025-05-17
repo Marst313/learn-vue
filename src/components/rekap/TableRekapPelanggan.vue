@@ -22,7 +22,7 @@ function getRecapData() {
 
 // ! -- Export XLSX -- !!
 function exportXLSX() {
-    const data = customerStore.customers.map((cust) => ({
+    const data = customerStore.recapCustomer.map((cust) => ({
         'Nama Pemilik': cust.namaPemilik,
         'Nama Hewan': cust.namaHewan,
         'Jenis Hewan': cust.jenisHewan,
@@ -61,7 +61,6 @@ function exportXLSX() {
                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                 :rowsPerPageOptions="[5, 10, 25]"
                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} pelanggan"
-                class="max-h-[35rem] overflow-auto"
             >
                 <template #header>
                     <PelangganTableHeader :filters="filters" />
@@ -72,7 +71,14 @@ function exportXLSX() {
                                 <label for="rentangTanggal">Pilih rentang tanggal</label>
                                 <DatePicker v-model="datePicker" id="rentangTanggal" selectionMode="range" :manualInput="false" showButtonBar placeholder="Pilih rentang tanggal" showIcon class="w-64" />
                             </div>
+
                             <Button label="Tampilkan" icon="pi pi-search" severity="success" variant="outlined" @click="getRecapData" />
+
+                            <div class="flex items-start flex-col justify-start gap-2">
+                                <label for="filter">Filter</label>
+
+                                <Select id="state" v-model="customerStore.dropdownItem" :options="customerStore.dropdownItems" optionLabel="name" placeholder="Pilih satu" class="w-full"></Select>
+                            </div>
                         </div>
 
                         <Button label="Export" icon="pi pi-upload" severity="contrast" @click="exportXLSX($event)" />
