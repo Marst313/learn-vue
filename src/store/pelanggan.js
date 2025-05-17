@@ -20,6 +20,7 @@ export const useCustomerStore = defineStore('pelanggan', {
 
         // Recap Customer
         recapCustomer: [],
+        recapCustomerOriginal: [],
         recapCustomerYearly: [],
         recapCustomerMonthly: [],
         findDate: [],
@@ -166,8 +167,10 @@ export const useCustomerStore = defineStore('pelanggan', {
             this.findDate[1] = endDate;
 
             this.recapCustomer = data.data;
+            this.recapCustomerOriginal = data.data;
             this.globalLoading = false;
             this.hasSearched = true;
+            this.dropdownItem = '';
 
             return data;
         },

@@ -20,6 +20,12 @@ function getRecapData() {
     customerStore.getRecapCustomer(datePicker.value[0], datePicker.value[1]);
 }
 
+function handleChange(event) {
+    customerStore.recapCustomer = customerStore.recapCustomerOriginal.filter((item) => {
+        return item.dokter === event.value.name;
+    });
+}
+
 // ! -- Export XLSX -- !!
 function exportXLSX() {
     const data = customerStore.recapCustomer.map((cust) => ({
@@ -75,9 +81,9 @@ function exportXLSX() {
                             <Button label="Tampilkan" icon="pi pi-search" severity="success" variant="outlined" @click="getRecapData" />
 
                             <div class="flex items-start flex-col justify-start gap-2">
-                                <label for="filter">Filter</label>
+                                <label for="filter">Pilih Dokter Yang Menangani</label>
 
-                                <Select id="state" v-model="customerStore.dropdownItem" :options="customerStore.dropdownItems" optionLabel="name" placeholder="Pilih satu" class="w-full"></Select>
+                                <Select id="state" v-model="customerStore.dropdownItem" :options="customerStore.dropdownItems" optionLabel="name" @change="handleChange" placeholder="Pilih satu" class="w-full"></Select>
                             </div>
                         </div>
 
