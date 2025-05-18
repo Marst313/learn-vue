@@ -136,6 +136,9 @@ function exportXLSX() {
                 <!-- Terapi -->
                 <Column field="terapi" header="Terapi" sortable style="min-width: 10rem"> </Column>
 
+                <!-- Diagnosa -->
+                <Column field="diagnosa" header="Diagnosa" sortable style="min-width: 10rem"> </Column>
+
                 <!-- Dokter -->
                 <Column field="dokter" header="Dokter" sortable style="min-width: 10rem"> </Column>
 
