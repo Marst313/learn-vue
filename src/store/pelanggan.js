@@ -73,6 +73,7 @@ export const useCustomerStore = defineStore('pelanggan', {
                 customer.tipeUmur &&
                 customer.anamnesa?.trim() &&
                 customer.terapi?.trim() &&
+                customer.diagnosa?.trim() &&
                 dokterSelected &&
                 customer.tanggalPeriksa;
 
@@ -235,7 +236,7 @@ export const useCustomerStore = defineStore('pelanggan', {
         },
 
         openNewCustomerDialogDetails() {
-            this.singleCustomer = { ...this.customerDetails[0], anamnesa: '', terapi: '', id: null };
+            this.singleCustomer = { ...this.customerDetails[0], anamnesa: '', terapi: '', diagnosa: '', id: null };
             this.submitted = false;
             this.customerDialog = true;
         },

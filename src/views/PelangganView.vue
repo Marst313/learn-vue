@@ -138,6 +138,9 @@ onMounted(async () => {
                 <!-- Terapi -->
                 <Column field="terapi" header="Terapi" sortable style="min-width: 10rem"> </Column>
 
+                <!-- Diagnosa -->
+                <Column field="diagnosa" header="Diagnosa" sortable style="min-width: 10rem"> </Column>
+
                 <!-- Dokter -->
                 <Column field="dokter" header="Dokter" sortable style="min-width: 10rem"> </Column>
 
@@ -159,111 +162,108 @@ onMounted(async () => {
         </div>
 
         <!-- NEW DIALOG AND UPDATE -->
-        <Dialog v-model:visible="customerStore.customerDialog" :style="{ width: '450px' }" header="Pelanggan Details" :modal="true" id="formPelanggan">
-            <div class="flex flex-col gap-6">
+        <Dialog v-model:visible="customerStore.customerDialog" :style="{ width: '500px' }" header="Pelanggan Details" :modal="true" id="formPelanggan">
+            <div class="grid grid-cols-2 gap-x-6 gap-y-4">
+                <!-- Nama Pemilik -->
                 <div>
-                    <label for="namaPemilik" class="block font-bold mb-3">Nama Pemilik</label>
-                    <InputText id="namaPemilik" v-model.trim="customerStore.singleCustomer.namaPemilik" placeholder="Nama pemilik" required="true" autofocus :invalid="customerStore.submitted && !customerStore.singleCustomer.namaPemilik" fluid />
+                    <label for="namaPemilik" class="block font-bold mb-2">Nama Pemilik</label>
+                    <InputText id="namaPemilik" v-model.trim="customerStore.singleCustomer.namaPemilik" placeholder="Nama pemilik" required autofocus :invalid="customerStore.submitted && !customerStore.singleCustomer.namaPemilik" class="w-full" />
                     <small v-if="customerStore.submitted && !customerStore.singleCustomer.namaPemilik" class="text-red-500">Nama pemilik tidak boleh kosong!</small>
                 </div>
+
+                <!-- Nama Hewan -->
                 <div>
-                    <label for="namaHewan" class="block font-bold mb-3">Nama Hewan</label>
-                    <InputText id="namaHewan" v-model="customerStore.singleCustomer.namaHewan" required="true" fluid placeholder="Nama hewan" />
+                    <label for="namaHewan" class="block font-bold mb-2">Nama Hewan</label>
+                    <InputText id="namaHewan" v-model="customerStore.singleCustomer.namaHewan" required class="w-full" placeholder="Nama hewan" />
                     <small v-if="customerStore.submitted && !customerStore.singleCustomer.namaHewan" class="text-red-500">Nama hewan tidak boleh kosong!</small>
                 </div>
-                <div class="grid grid-cols-2 space-x-5">
-                    <div>
-                        <label for="jenisHewan" class="block font-bold mb-3">Jenis Hewan</label>
-                        <InputText id="jenisHewan" type="text" v-model="customerStore.singleCustomer.jenisHewan" required="true" fluid placeholder="Jenis hewan" />
 
-                        <!-- <AutoComplete v-model="customerStore.singleCustomer.jenisHewan" optionLabel="name" :suggestions="customerStore.filteredJenisHewan" @complete="customerStore.searchJenis" placeholder="Masukkan jenis hewan" class="w-full">
-                            <template #option="slotProps">
-                                <div class="flex items-center text-white">
-                                    <div>{{ slotProps.option.name }}</div>
-                                </div>
-                            </template>
-                            <template #footer>
-                                <div class="px-3 py-3">
-                                    <Button label="Add New" fluid severity="secondary" text size="small" icon="pi pi-plus" />
-                                </div>
-                            </template>
-                        </AutoComplete> -->
-
-                        <small v-if="customerStore.submitted && !customerStore.singleCustomer.jenisHewan" class="text-red-500">Jenis hewan tidak boleh kosong!</small>
-                    </div>
-
-                    <div>
-                        <span class="block font-bold mb-4">Gender</span>
-                        <div class="grid grid-cols-12 gap-4">
-                            <div class="flex items-center gap-2 col-span-6">
-                                <RadioButton id="jantan" v-model="customerStore.singleCustomer.jenisKelamin" name="gender" value="Jantan" />
-                                <label for="jantan">Jantan</label>
-                            </div>
-                            <div class="flex items-center gap-2 col-span-6">
-                                <RadioButton id="gender" v-model="customerStore.singleCustomer.jenisKelamin" name="gender" value="Betina" />
-                                <label for="betina">Betina</label>
-                            </div>
-                        </div>
-
-                        <small v-if="customerStore.submitted && !customerStore.singleCustomer.jenisKelamin" class="text-red-500">Jenis kelamin tidak boleh kosong!</small>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-2 space-x-5">
-                    <div>
-                        <label for="umur" class="block font-bold mb-3">Umur</label>
-                        <InputText
-                            id="umur"
-                            type="number"
-                            onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'"
-                            v-model="customerStore.singleCustomer.umur"
-                            required="true"
-                            fluid
-                            placeholder="Masukkan umur hewan"
-                        />
-                        <small v-if="customerStore.submitted && !customerStore.singleCustomer.umur" class="text-red-500">Umur hewan tidak boleh kosong!</small>
-                    </div>
-
-                    <div>
-                        <span class="block font-bold mb-4">Umur</span>
-                        <div class="grid grid-cols-12 gap-4">
-                            <div class="flex items-center gap-2 col-span-6">
-                                <RadioButton id="tahun" v-model="customerStore.singleCustomer.tipeUmur" name="" value="tahun" />
-                                <label for="tahun">Tahun</label>
-                            </div>
-                            <div class="flex items-center gap-2 col-span-6">
-                                <RadioButton id="bulan" v-model="customerStore.singleCustomer.tipeUmur" name="" value="bulan" />
-                                <label for="bulan">Bulan</label>
-                            </div>
-                            <small v-if="customerStore.submitted && !customerStore.singleCustomer.tipeUmur" class="text-red-500">Tipe umur wajib dipilih!</small>
-                        </div>
-                    </div>
-                </div>
-
+                <!-- Jenis Hewan -->
                 <div>
-                    <label for="anamnesa" class="block font-bold mb-3">Anamnesa</label>
-                    <Textarea id="address" v-model="customerStore.singleCustomer.anamnesa" placeholder="Masukkan anamnesa tulis ( - ) apabila kosong" rows="2" fluid required="true" cols="4" style="resize: none" />
+                    <label for="jenisHewan" class="block font-bold mb-2">Jenis Hewan</label>
+                    <InputText id="jenisHewan" v-model="customerStore.singleCustomer.jenisHewan" required class="w-full" placeholder="Jenis hewan" />
+                    <small v-if="customerStore.submitted && !customerStore.singleCustomer.jenisHewan" class="text-red-500">Jenis hewan tidak boleh kosong!</small>
+                </div>
+
+                <!-- Gender -->
+                <div>
+                    <span class="block font-bold mb-2">Gender</span>
+                    <div class="flex gap-4">
+                        <div class="flex items-center gap-2">
+                            <RadioButton id="jantan" v-model="customerStore.singleCustomer.jenisKelamin" name="gender" value="Jantan" />
+                            <label for="jantan">Jantan</label>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <RadioButton id="betina" v-model="customerStore.singleCustomer.jenisKelamin" name="gender" value="Betina" />
+                            <label for="betina">Betina</label>
+                        </div>
+                    </div>
+                    <small v-if="customerStore.submitted && !customerStore.singleCustomer.jenisKelamin" class="text-red-500">Jenis kelamin tidak boleh kosong!</small>
+                </div>
+
+                <!-- Umur -->
+                <div>
+                    <label for="umur" class="block font-bold mb-2">Umur</label>
+                    <InputText
+                        id="umur"
+                        type="number"
+                        v-model="customerStore.singleCustomer.umur"
+                        class="w-full"
+                        placeholder="Masukkan umur"
+                        onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'"
+                    />
+                    <small v-if="customerStore.submitted && !customerStore.singleCustomer.umur" class="text-red-500">Umur tidak boleh kosong!</small>
+                </div>
+
+                <!-- Tipe Umur -->
+                <div>
+                    <span class="block font-bold mb-2">Tipe Umur</span>
+                    <div class="flex gap-4">
+                        <div class="flex items-center gap-2">
+                            <RadioButton id="tahun" v-model="customerStore.singleCustomer.tipeUmur" value="tahun" />
+                            <label for="tahun">Tahun</label>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <RadioButton id="bulan" v-model="customerStore.singleCustomer.tipeUmur" value="bulan" />
+                            <label for="bulan">Bulan</label>
+                        </div>
+                    </div>
+                    <small v-if="customerStore.submitted && !customerStore.singleCustomer.tipeUmur" class="text-red-500">Tipe umur wajib dipilih!</small>
+                </div>
+
+                <!-- Anamnesa -->
+                <div class="col-span-2">
+                    <label for="anamnesa" class="block font-bold mb-2">Anamnesa</label>
+                    <Textarea id="anamnesa" v-model="customerStore.singleCustomer.anamnesa" rows="2" class="w-full resize-none" placeholder="Masukkan anamnesa atau (-)" />
                     <small v-if="customerStore.submitted && !customerStore.singleCustomer.anamnesa" class="text-red-500">Anamnesa tidak boleh kosong!</small>
                 </div>
 
-                <div>
-                    <label for="terapi" class="block font-bold mb-3">Terapi</label>
-                    <Textarea id="terapi" v-model="customerStore.singleCustomer.terapi" rows="2" fluid required="true" cols="4" style="resize: none" placeholder="Masukkan terapi tulis ( - ) apabila kosong" />
-                    <small v-if="customerStore.submitted && !customerStore.singleCustomer.terapi" class="text-red-500">Isi dengan ( - ) apabila tidak ada terapi! </small>
+                <!-- Terapi -->
+                <div class="col-span-2">
+                    <label for="terapi" class="block font-bold mb-2">Terapi</label>
+                    <Textarea id="terapi" v-model="customerStore.singleCustomer.terapi" rows="2" class="w-full resize-none" placeholder="Masukkan terapi atau (-)" />
+                    <small v-if="customerStore.submitted && !customerStore.singleCustomer.terapi" class="text-red-500">Isi dengan ( - ) apabila tidak ada terapi!</small>
                 </div>
 
-                <div class="flex flex-wrap gap-2 w-full">
-                    <label for="state">Dokter</label>
+                <!-- Diagnosa -->
+                <div class="col-span-2">
+                    <label for="diagnosa" class="block font-bold mb-2">Diagnosa</label>
+                    <Textarea id="diagnosa" v-model="customerStore.singleCustomer.diagnosa" rows="2" class="w-full resize-none" placeholder="Masukkan diagnosa atau (-)" />
+                    <small v-if="customerStore.submitted && !customerStore.singleCustomer.diagnosa" class="text-red-500">Isi dengan ( - ) apabila tidak ada diagnosa!</small>
+                </div>
 
-                    <Select id="state" v-model="customerStore.dropdownItem" :options="customerStore.dropdownItems" optionLabel="name" placeholder="Pilih satu" class="w-full"></Select>
-
+                <!-- Dokter -->
+                <div class="col-span-2">
+                    <label for="dokter" class="block font-bold mb-2">Dokter</label>
+                    <Select id="dokter" v-model="customerStore.dropdownItem" :options="customerStore.dropdownItems" optionLabel="name" placeholder="Pilih satu" class="w-full" />
                     <small v-if="customerStore.submitted && !customerStore.dropdownItem" class="text-red-500">Dokter harus dipilih!</small>
                 </div>
 
-                <div>
-                    <label for="tanggalPeriksa" class="block font-bold mb-3">Tanggal Periksa</label>
-                    <InputText id="tanggalPeriksa" type="date" v-model="customerStore.singleCustomer.tanggalPeriksa" required="true" fluid />
-                    <small v-if="customerStore.submitted && !customerStore.singleCustomer.tanggalPeriksa" class="text-red-500">Tanggal periksatidak boleh kosong!</small>
+                <!-- Tanggal Periksa -->
+                <div class="col-span-2">
+                    <label for="tanggalPeriksa" class="block font-bold mb-2">Tanggal Periksa</label>
+                    <InputText id="tanggalPeriksa" type="date" v-model="customerStore.singleCustomer.tanggalPeriksa" class="w-full" />
+                    <small v-if="customerStore.submitted && !customerStore.singleCustomer.tanggalPeriksa" class="text-red-500">Tanggal periksa tidak boleh kosong!</small>
                 </div>
             </div>
 
@@ -272,7 +272,6 @@ onMounted(async () => {
                 <Button :label="customerStore.isLoading ? 'Loading...' : 'Save'" icon="pi pi-check" @click="saveCustomer" type="submit" :disabled="customerStore.isLoading" />
             </template>
         </Dialog>
-        <!-- NEW DIALOG AND UPDATE -->
 
         <!-- SINGLE DATA DELETE -->
         <Dialog v-model:visible="customerStore.deleteCustomerDialog" :style="{ width: '450px' }" header="Confirm" :modal="true">
